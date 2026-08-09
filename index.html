@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מבוא לתקשוב: המסע אל לב המחשב — תקשוב יישומי כיתה י׳</title>
+<title>תקשוב יישומי בשילוב טכנולוגיה — כיתה י׳</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -30,141 +30,161 @@
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
 
+  /* ===== Top nav ===== */
   .topbar{
     display:flex;align-items:center;justify-content:space-between;
     padding:18px 40px;
     border-bottom:1px solid var(--line);
     background:var(--cream);
-    flex-wrap:wrap;gap:10px;
   }
   .topbar .site-name{
     font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;
   }
   .topbar .crumbs{
     font-size:14px;color:var(--ink-soft);
-    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    display:flex;align-items:center;gap:8px;
   }
   .topbar .crumbs a{color:var(--gold-dark);font-weight:600;}
   .topbar .crumbs a:hover{text-decoration:underline;}
 
-  .page-hero{
-    max-width:1180px;margin:0 auto;
-    padding:44px 40px 10px;
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    min-height:420px;
+    display:flex;align-items:flex-end;
+    overflow:hidden;
+    background:
+      linear-gradient(0deg, rgba(15,20,29,.15) 0%, rgba(15,20,29,.15) 100%),
+      url('images/hero.jpg') center/cover no-repeat,
+      radial-gradient(ellipse at 75% 20%, rgba(201,151,31,.35), transparent 55%),
+      linear-gradient(160deg,#151c29 0%,#1e2a3d 45%,#233247 100%);
   }
-  .page-hero .tag{
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--card-bg);border:1px solid var(--line);
-    border-radius:999px;padding:6px 16px;font-size:13px;color:var(--ink-soft);
+  .hero svg.hero-pattern{
+    position:absolute;inset:0;width:100%;height:100%;
+    opacity:.35;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(15,20,29,.92) 0%, rgba(15,20,29,.55) 45%, rgba(15,20,29,.15) 100%);
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    width:100%;
+    max-width:1180px;margin:0 auto;
+    padding:48px 40px 40px;
+    text-align:right;
+  }
+  .hero h1{
+    font-family:'Frank Ruhl Libre',serif;font-weight:900;
+    font-size:clamp(30px,4.6vw,50px);line-height:1.25;
+    color:#f7f3e8;
+    text-shadow:0 3px 16px rgba(0,0,0,.5);
     margin-bottom:18px;
   }
-  .page-hero .tag .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
-  .page-hero h1{
-    font-family:'Frank Ruhl Libre',serif;font-weight:900;
-    font-size:clamp(28px,4.4vw,44px);line-height:1.3;margin-bottom:16px;
-  }
-  .page-hero p{
-    max-width:780px;color:var(--ink-soft);font-size:16px;line-height:1.8;
+  .hero h1 .accent{color:var(--gold);}
+  .hero p{
+    max-width:640px;margin-inline-start:auto;
+    color:#dfe3ea;font-size:16px;line-height:1.75;
   }
 
-  .section-wrap{max-width:1180px;margin:0 auto;padding:36px 40px;}
-  .section-wrap h2{
-    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:22px;
-    border-inline-end:4px solid var(--gold);padding-inline-end:14px;
-    margin-bottom:24px;
+  /* ===== Meta chip row ===== */
+  .meta-row{
+    max-width:1180px;margin:0 auto;
+    padding:22px 40px 0;
+    display:flex;justify-content:flex-end;
   }
-
-  /* Gem cards */
-  .gem-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
-  }
-  @media (max-width:860px){ .gem-grid{grid-template-columns:1fr;} }
-
-  .gem-card{
-    background:var(--card-bg);border:1px solid var(--line);border-radius:16px;
-    padding:26px 22px;box-shadow:var(--shadow);
-    display:flex;flex-direction:column;gap:14px;
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .gem-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(30,38,52,.14);}
-  .gem-icon{
-    width:46px;height:46px;border-radius:12px;
-    background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-    display:flex;align-items:center;justify-content:center;color:#fff;
-  }
-  .gem-icon svg{width:24px;height:24px;}
-  .gem-num{font-size:12px;font-weight:700;color:var(--gold-dark);letter-spacing:.5px;text-transform:uppercase;}
-  .gem-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;}
-  .gem-desc{font-size:13.5px;color:var(--ink-soft);flex:1;}
-  .gem-btn{
-    margin-top:4px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    background:var(--ink);color:#f7f3e8;font-weight:600;font-size:14px;
-    padding:11px 18px;border-radius:10px;transition:background .15s ease;
-  }
-  .gem-btn:hover{background:var(--gold-dark);}
-  .gem-btn svg{width:16px;height:16px;}
-
-  /* Presentation section */
-  .pdf-wrap{
-    background:var(--card-bg);border:1px solid var(--line);border-radius:16px;
-    box-shadow:var(--shadow);overflow:hidden;
-  }
-  .pdf-preview{
-    position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
-    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
-  }
-  .pdf-preview img{
-    width:100%;height:100%;object-fit:cover;opacity:.55;
-  }
-  .pdf-preview .overlay{
-    position:absolute;inset:0;
-    background:linear-gradient(0deg, rgba(15,20,29,.92) 0%, rgba(15,20,29,.5) 55%, rgba(15,20,29,.25) 100%);
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-    text-align:center;padding:30px 20px;gap:10px;
-  }
-  .pdf-preview .overlay .icon{
-    width:46px;height:46px;color:var(--gold);margin-bottom:4px;
-  }
-  .pdf-preview .overlay h3{
-    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px;color:#f7f3e8;
-  }
-  .pdf-preview .overlay p{
-    font-size:14px;color:#dfe3ea;
-  }
-  .pdf-footer{
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
-    padding:16px 22px;border-top:1px solid var(--line);
-  }
-  .pdf-footer .name{font-size:14px;color:var(--ink-soft);}
-  .dl-btn{
+  .chip{
     display:inline-flex;align-items:center;gap:8px;
-    background:var(--gold);color:#241d0d;font-weight:700;font-size:13.5px;
-    padding:9px 16px;border-radius:8px;transition:background .15s ease;
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:8px 18px;
+    font-size:14px;font-weight:500;color:var(--ink-soft);
+    box-shadow:var(--shadow);
   }
-  .dl-btn:hover{background:var(--gold-dark);color:#fff;}
-  .dl-btn svg{width:15px;height:15px;}
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
 
-  /* Video link card */
-  .video-link-card{
-    display:flex;align-items:center;gap:18px;
-    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
-    border:1px solid var(--line);border-radius:16px;
-    box-shadow:var(--shadow);padding:24px 26px;
+  /* ===== Section header ===== */
+  .section-wrap{max-width:1180px;margin:0 auto;padding:44px 40px 80px;}
+  .section-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:30px;
+  }
+  .section-head h2{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:26px;
+    border-inline-end:4px solid var(--gold);
+    padding-inline-end:14px;
+  }
+  .section-head .count{
+    font-size:14px;color:var(--ink-soft);
+  }
+
+  /* ===== Card grid ===== */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  @media (max-width:920px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .grid{grid-template-columns:1fr;} }
+
+  .card{
+    background:var(--card-bg);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
     transition:transform .18s ease, box-shadow .18s ease;
   }
-  .video-link-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.2);}
-  .video-link-icon{
-    flex-shrink:0;width:52px;height:52px;border-radius:12px;
-    background:rgba(201,151,31,.18);display:flex;align-items:center;justify-content:center;color:var(--gold);
-  }
-  .video-link-icon svg{width:26px;height:26px;}
-  .video-link-body{flex:1;}
-  .video-link-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;color:#f7f3e8;margin-bottom:4px;}
-  .video-link-desc{font-size:13.5px;color:#c3cad6;}
-  .video-link-arrow{flex-shrink:0;width:24px;height:24px;color:var(--gold);}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(30,38,52,.14);}
 
+  .card-media{
+    position:relative;
+    height:150px;
+    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .card-media img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;
+  }
+  .card-media svg.deco{position:absolute;inset:0;width:100%;height:100%;opacity:.45;}
+  .card-media svg.icon{
+    position:relative;z-index:1;width:44px;height:44px;
+    color:var(--gold);
+  }
+  .card-num{
+    position:absolute;top:10px;left:10px;
+    background:rgba(15,20,29,.55);
+    color:#f3ead0;font-size:11px;font-weight:600;
+    padding:4px 10px;border-radius:999px;
+    backdrop-filter:blur(2px);
+    z-index:2;
+  }
+
+  .card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-title{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;
+    color:var(--ink);
+  }
+  .card-desc{font-size:13.5px;color:var(--ink-soft);flex:1;}
+  .card-enter{
+    margin-top:6px;
+    font-size:13.5px;font-weight:700;color:var(--gold-dark);
+    display:flex;align-items:center;gap:6px;
+  }
+  .card-enter svg{width:14px;height:14px;transition:transform .15s ease;}
+  .card:hover .card-enter svg{transform:translateX(-3px);}
+
+  /* ===== Footer ===== */
   footer{
     border-top:1px solid var(--line);
-    padding:26px 40px;text-align:center;font-size:13px;color:var(--ink-soft);
+    padding:26px 40px;
+    text-align:center;
+    font-size:13px;color:var(--ink-soft);
   }
   footer a{color:var(--gold-dark);font-weight:600;}
 </style>
@@ -172,81 +192,272 @@
 <body>
 
   <div class="topbar">
-    <div class="crumbs">
-      <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> ‹
-      <a href="./">תקשוב יישומי</a> ‹ מבוא לתקשוב
-    </div>
-    <div class="site-name">תקשוב יישומי · כיתה י׳</div>
+    <div class="crumbs"><a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> ‹ תקשוב יישומי</div>
+    <div class="site-name">תקשוב יישומי · בשילוב טכנולוגיה</div>
   </div>
 
-  <div class="page-hero">
-    <div class="tag"><span class="dot"></span> נושא 1 · מבוא</div>
-    <h1>מבוא לתקשוב: המסע אל לב המחשב</h1>
-    <p>היכרות ראשונה עם עולם המחשוב — מהו מחשב, סוגי מחשבים, והרכיבים שמרכיבים אותו מבפנים. בחרו את ה־Gem המתאים לשלב שבו אתם נמצאים, צפו במצגת המלווה, וצפו בסרטון ההיכרות.</p>
+  <section class="hero">
+    <svg class="hero-pattern" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#c9971f" stroke-width="1.4" fill="none" opacity=".55">
+        <path d="M0 340 L140 340 L140 260 L300 260 L300 340 L470 340"/>
+        <path d="M470 340 L470 180 L640 180 L640 100 L820 100"/>
+        <path d="M300 260 L300 120 L520 120"/>
+        <path d="M820 100 L980 100 L980 220 L1200 220"/>
+        <path d="M640 180 L640 320 L900 320 L900 380 L1200 380"/>
+      </g>
+      <g fill="#c9971f" opacity=".85">
+        <circle cx="140" cy="340" r="4"/><circle cx="300" cy="260" r="4"/>
+        <circle cx="470" cy="340" r="4"/><circle cx="470" cy="180" r="4"/>
+        <circle cx="640" cy="180" r="4"/><circle cx="820" cy="100" r="4"/>
+        <circle cx="300" cy="120" r="4"/><circle cx="980" cy="100" r="4"/>
+        <circle cx="980" cy="220" r="4"/><circle cx="640" cy="320" r="4"/>
+        <circle cx="900" cy="320" r="4"/><circle cx="900" cy="380" r="4"/>
+      </g>
+    </svg>
+    <div class="hero-inner">
+      <h1>לימוד תקשוב לכיתה י׳ <span class="accent">בשיתוף טכנולוגיות AI</span></h1>
+      <p>ממערכות הפעלה ועד פרוטוקולי רשת — מסע מעשי אל תוך התשתית שמריצה את העולם הדיגיטלי. בכל נושא מלווה אותך "מורה אישי מבוסס בינה מלאכותית" (Gem) שעוזר לך לחקור, לתרגל ולהבין לעומק — לא רק לשנן.</p>
+    </div>
+  </section>
+
+  <div class="meta-row">
+    <div class="chip"><span class="dot"></span> כיתה י׳ · תוכנית לימודים שנתית</div>
   </div>
 
   <div class="section-wrap">
-    <h2>מורים אישיים מבוססי בינה מלאכותית (Gems)</h2>
-    <div class="gem-grid">
-
-      <a class="gem-card" href="https://gemini.google.com/gem/1qSYAKXs5uD6vzZH1jT8Udy0bDKLZ2_pr?usp=sharing" target="_blank" rel="noopener">
-        <div class="gem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg></div>
-        <div class="gem-num">Gem 1</div>
-        <div class="gem-title">מדריך עולם המחשוב</div>
-        <div class="gem-desc">שיחה מודרכת שפותחת את היחידה — מהו מחשב, ההיסטוריה הקצרה שלו, וסוגי המחשבים והשימושים השונים בעולם האמיתי.</div>
-        <div class="gem-btn">כניסה ל-Gem <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
-      </a>
-
-      <a class="gem-card" href="https://gemini.google.com/gem/1vwaNEIttZzMt6xNfoOIAaa1SFROrtFQ0?usp=sharing" target="_blank" rel="noopener">
-        <div class="gem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/><circle cx="12" cy="9" r="2"/></svg></div>
-        <div class="gem-num">Gem 2</div>
-        <div class="gem-title">חוקר לב המחשב</div>
-        <div class="gem-desc">צלילה לתוך הרכיבים הפיזיים של המחשב — לוח האם, המעבד וזיכרון ה-RAM, ואיך כולם עובדים יחד.</div>
-        <div class="gem-btn">כניסה ל-Gem <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
-      </a>
-
-      <a class="gem-card" href="https://gemini.google.com/gem/14v3PVVeMLgXaCz7mQ1W09xOSKIBaSfb2?usp=sharing" target="_blank" rel="noopener">
-        <div class="gem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="10" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="15" width="7" height="7" rx="1.5"/></svg></div>
-        <div class="gem-num">Gem 3</div>
-        <div class="gem-title">מומחה הקלט, הפלט והחיבוריות</div>
-        <div class="gem-desc">היכרות עם אמצעי הקלט (מקלדת, עכבר), אמצעי הפלט (מסך), ואמצעי החיבוריות והאחסון (SSD, HDD וענן).</div>
-        <div class="gem-btn">כניסה ל-Gem <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
-      </a>
-
+    <div class="section-head">
+      <h2>בחר/י את הנושא שלך</h2>
+      <div class="count">15 נושאים</div>
     </div>
-  </div>
 
-  <div class="section-wrap">
-    <h2>המצגת המלווה</h2>
-    <div class="pdf-wrap">
-      <div class="pdf-preview">
-        <img src="images/topic-001.jpg" alt="יחידה מבוא למבנה המחשב">
-        <div class="overlay">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M8 9l3 3 5-5"/></svg>
-          <h3>יחידה: מבוא למבנה המחשב</h3>
-          <p>לחצו למטה להורדת המצגת</p>
+    <div class="grid">
+
+      <!-- 1 -->
+      <a class="card" href="01-mavo-latikshuv.html">
+        <div class="card-media">
+          <img src="images/topic-001.jpg" alt="מבוא לתקשוב: המסע אל לב המחשב" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><path d="M10 90 Q60 40 110 70 T190 30" stroke="#fff" stroke-width="2" fill="none"/><circle cx="35" cy="25" r="12" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="12" rx="2"/><path d="M9 20h6M12 16v4"/><circle cx="12" cy="9" r="2"/></svg>
+          <div class="card-num">נושא 1</div>
         </div>
-      </div>
-      <div class="pdf-footer">
-        <div class="name">מבוא יחידה — מבנה וחלקי המחשב</div>
-        <a class="dl-btn" href="topic-01-presentation.pdf" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M6 11l6 6 6-6M5 21h14"/></svg>
-          פתיחה / הורדה
-        </a>
-      </div>
-    </div>
-  </div>
+        <div class="card-body">
+          <div class="card-title">מבוא לתקשוב: המסע אל לב המחשב</div>
+          <div class="card-desc">היכרות ראשונה עם עולם המחשוב — מהו מחשב, סוגי מחשבים, והרכיבים שמרכיבים אותו מבפנים.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
 
-  <div class="section-wrap">
-    <h2>סרטון ההיכרות</h2>
-    <a class="video-link-card" href="https://notebook.google.com/notebook/855d8870-0d02-4bd1-964b-dbfa935870d6/artifact/d845d893-c1cc-4023-b5c5-650568ff4d8b?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">
-      <div class="video-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z"/></svg></div>
-      <div class="video-link-body">
-        <div class="video-link-title">המסע אל לב המחשב</div>
-        <div class="video-link-desc">סרטון ההיכרות ליחידה — נפתח בטאב חדש (NotebookLM)</div>
-      </div>
-      <div class="video-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
-    </a>
+      <!-- 2 -->
+      <a class="card" href="02-betichut-maabada.html">
+        <div class="card-media">
+          <img src="images/topic-002.jpg" alt="מבוא לבטיחות במעבדת תקשוב" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><path d="M20 100 L60 30 L100 80 L140 20 L180 90" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div class="card-num">נושא 2</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">מבוא לבטיחות במעבדת תקשוב</div>
+          <div class="card-desc">כללי בטיחות, התנהלות נכונה בסביבת עבודה טכנית, וטיפול נכון בציוד רשת ומחשוב.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 3 -->
+      <a class="card" href="03-marechot-hafala.html">
+        <div class="card-media">
+          <img src="images/topic-003.jpg" alt="מבוא למערכות הפעלה" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><rect x="20" y="20" width="160" height="72" rx="6" stroke="#fff" stroke-width="2" fill="none"/><path d="M20 40h160" stroke="#fff" stroke-width="2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+          <div class="card-num">נושא 3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">מבוא למערכות הפעלה</div>
+          <div class="card-desc">מה תפקידה של מערכת ההפעלה, איך היא מנהלת את החומרה, והשוואה בין המערכות הנפוצות.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 4 -->
+      <a class="card" href="04-simulator-packet-tracer.html">
+        <div class="card-media">
+          <img src="images/topic-004.jpg" alt="יסודות העבודה עם סימולטור Packet Tracer" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><circle cx="45" cy="56" r="10" stroke="#fff" stroke-width="2" fill="none"/><circle cx="155" cy="30" r="10" stroke="#fff" stroke-width="2" fill="none"/><circle cx="155" cy="85" r="10" stroke="#fff" stroke-width="2" fill="none"/><path d="M55 56 L145 30 M55 56 L145 85" stroke="#fff" stroke-width="1.5"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 12l6-4.5M9 12l6 4.5"/></svg>
+          <div class="card-num">נושא 4</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">יסודות העבודה עם סימולטור Packet Tracer</div>
+          <div class="card-desc">הכרות עם כלי הסימולציה שילווה אותנו לאורך השנה — בניית טופולוגיות רשת ראשונות.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 5 -->
+      <a class="card" href="05-yesodot-tikshoret.html">
+        <div class="card-media">
+          <img src="images/topic-005.jpg" alt="יסודות התקשורת" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><path d="M10 56 Q40 20 70 56 T130 56 T190 56" stroke="#fff" stroke-width="2" fill="none"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 0116 0"/><path d="M7 12a5 5 0 0110 0"/><circle cx="12" cy="12" r="2"/></svg>
+          <div class="card-num">יחידה 1</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">יסודות התקשורת</div>
+          <div class="card-desc">המושגים הבסיסיים של תקשורת נתונים — איך מידע עובר בין מכשירים ברשת.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 6 -->
+      <a class="card" href="06-marechot-hafala-metag-natav.html">
+        <div class="card-media">
+          <img src="images/topic-006.jpg" alt="מערכות הפעלה של מתג / נתב" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><rect x="30" y="45" width="140" height="24" rx="4" stroke="#fff" stroke-width="2" fill="none"/><path d="M50 45v-15M100 45v-15M150 45v-15" stroke="#fff" stroke-width="2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="9" width="18" height="6" rx="1.5"/><path d="M6 9V6M12 9V6M18 9V6M6 15v3M12 15v3M18 15v3"/></svg>
+          <div class="card-num">יחידה 2</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">מערכות הפעלה של מתג / נתב</div>
+          <div class="card-desc">עבודה בסביבת שורת הפקודה (CLI) של מתג ונתב — הגדרות בסיסיות וניהול ראשוני.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 7 -->
+      <a class="card" href="07-protocolim-vemodelim.html">
+        <div class="card-media">
+          <img src="images/topic-007.jpg" alt="פרוטוקולים ומודלים" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><rect x="30" y="16" width="140" height="16" stroke="#fff" stroke-width="1.5" fill="none"/><rect x="30" y="40" width="140" height="16" stroke="#fff" stroke-width="1.5" fill="none"/><rect x="30" y="64" width="140" height="16" stroke="#fff" stroke-width="1.5" fill="none"/><rect x="30" y="88" width="140" height="16" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="4"/><rect x="4" y="10" width="16" height="4"/><rect x="4" y="16" width="16" height="4"/></svg>
+          <div class="card-num">יחידה 3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">פרוטוקולים ומודלים</div>
+          <div class="card-desc">מודל השכבות (OSI / TCP-IP) והפרוטוקולים המרכזיים שמנהלים את התקשורת ברשת.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 8 -->
+      <a class="card" href="08-hashichva-hafizit.html">
+        <div class="card-media">
+          <img src="images/topic-008.jpg" alt="השכבה הפיזית" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><path d="M15 56h170" stroke="#fff" stroke-width="3"/><path d="M40 40l0 32M80 40l0 32M120 40l0 32M160 40l0 32" stroke="#fff" stroke-width="2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4M17 12h4M7 12a5 5 0 0110 0"/><circle cx="12" cy="12" r="1.6"/></svg>
+          <div class="card-num">יחידה 4</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">השכבה הפיזית</div>
+          <div class="card-desc">כבלים, מחברים, ואמצעי תקשורת פיזיים — איך הביטים בפועל "נוסעים" בין מכשירים.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 9 -->
+      <a class="card" href="09-shitot-mispur.html">
+        <div class="card-media">
+          <img src="images/topic-009.jpg" alt="שיטות מיספור" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><text x="20" y="55" fill="#fff" font-size="26" font-family="monospace" opacity=".7">1011</text><text x="110" y="80" fill="#fff" font-size="26" font-family="monospace" opacity=".7">0F2A</text></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h4M4 12h4M4 18h4M12 6h8M12 12h8M12 18h8"/></svg>
+          <div class="card-num">יחידה 5</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">שיטות מיספור</div>
+          <div class="card-desc">בינארי, הקסדצימלי ועשרוני — השפה שבה מחשבים ורכיבי רשת "חושבים" בפועל.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 10 -->
+      <a class="card" href="10-arp-dhcp.html">
+        <div class="card-media">
+          <img src="images/topic-010.jpg" alt="פרוטוקול ARP ופרוטוקול DHCP" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><circle cx="40" cy="56" r="14" stroke="#fff" stroke-width="2" fill="none"/><circle cx="160" cy="30" r="10" stroke="#fff" stroke-width="2" fill="none"/><circle cx="160" cy="82" r="10" stroke="#fff" stroke-width="2" fill="none"/><path d="M54 56 L150 30 M54 56 L150 82" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="10" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="15" width="7" height="7" rx="1.5"/><path d="M10 13.5L14 8M10 13.5L14 18.5"/></svg>
+          <div class="card-num">יחידה 6</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">פרוטוקול ARP ופרוטוקול DHCP</div>
+          <div class="card-desc">איך מכשיר מוצא את הכתובת הפיזית של שכנו ברשת, ואיך הוא מקבל כתובת IP באופן אוטומטי.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 11 -->
+      <a class="card" href="11-maabadot-packet-tracer.html">
+        <div class="card-media">
+          <img src="images/topic-011.jpg" alt="מעבדות Packet Tracer" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><rect x="25" y="25" width="60" height="45" rx="4" stroke="#fff" stroke-width="2" fill="none"/><rect x="115" y="25" width="60" height="45" rx="4" stroke="#fff" stroke-width="2" fill="none"/><path d="M85 47h30" stroke="#fff" stroke-width="2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6M10 3v5l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></svg>
+          <div class="card-num">מעבדות</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">מעבדות Packet Tracer</div>
+          <div class="card-desc">אוסף תרגילי סימולציה מעשיים ליישום כל מה שנלמד — בניית רשתות, פתרון תקלות ובדיקה.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 12 -->
+      <a class="card" href="12-chazarot-mivchanim.html">
+        <div class="card-media">
+          <img src="images/topic-012.jpg" alt="חזרות ומבחנים" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><rect x="40" y="18" width="120" height="76" rx="4" stroke="#fff" stroke-width="2" fill="none"/><path d="M55 40h90M55 56h90M55 72h60" stroke="#fff" stroke-width="2"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l2 2 4-4"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+          <div class="card-num">סיכום</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">חזרות ומבחנים</div>
+          <div class="card-desc">סיכומי חומר, שאלות תרגול ומבחני הדמיה לקראת סוף היחידות והשנה.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 13 -->
+      <a class="card" href="13-yechidat-cheker.html">
+        <div class="card-media">
+          <img src="images/topic-013.jpg" alt="יחידת חקר — 30%" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><circle cx="80" cy="50" r="34" stroke="#fff" stroke-width="2" fill="none"/><path d="M104 74 L150 100" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>
+          <div class="card-num">יחידת חקר</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">יחידת חקר — 30%</div>
+          <div class="card-desc">עבודת חקר עצמאית בנושא תקשוב לבחירת התלמיד, המהווה 30% מהציון השנתי.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 14 -->
+      <a class="card" href="14-bait-chacham-arduino.html">
+        <div class="card-media">
+          <img src="images/topic-014.jpg" alt="מערכות בית חכם — תרגול ארדואינו" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><path d="M60 92 L60 55 L100 25 L140 55 L140 92 Z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><rect x="85" y="65" width="30" height="27" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
+          <div class="card-num">יחידה 7</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">מערכות בית חכם — תרגול ארדואינו</div>
+          <div class="card-desc">בניית פרויקטים מעשיים עם Arduino — חיישנים, בקרה ואוטומציה בסביבת בית חכם.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+      <!-- 15 -->
+      <a class="card" href="15-hakamat-atar-web-dns.html">
+        <div class="card-media">
+          <img src="images/topic-015.jpg" alt="הקמת אתר אינטרנט — שרתים, Web ו-DNS" loading="lazy" decoding="async" onerror="this.style.display='none'">
+          <svg class="deco" viewBox="0 0 200 112"><circle cx="100" cy="56" r="34" stroke="#fff" stroke-width="2" fill="none"/><path d="M66 56h68M100 22 Q120 56 100 90 Q80 56 100 22" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z"/></svg>
+          <div class="card-num">יחידה 8</div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">הקמת אתר אינטרנט — שרתים, Web ו-DNS</div>
+          <div class="card-desc">איך אתר אינטרנט "עולה לאוויר" בפועל — שרתי Web, אחסון, ומערכת השמות (DNS) שמתרגמת כתובות לבני אדם.</div>
+          <div class="card-enter">כניסה לנושא <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></div>
+        </div>
+      </a>
+
+    </div>
   </div>
 
   <footer>

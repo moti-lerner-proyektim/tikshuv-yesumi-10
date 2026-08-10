@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ההבדל בין שרת למחשב לקוח — תקשוב יישומי כיתה י׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6f0e3;
+    --cream-2:#efe7d5;
+    --ink:#1e2634;
+    --ink-soft:#4a5468;
+    --gold:#c9971f;
+    --gold-dark:#a97c14;
+    --line:#e2d8c1;
+    --card-bg:#ffffff;
+    --shadow:0 10px 30px rgba(30,38,52,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Heebo',sans-serif;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 40px;
+    border-bottom:1px solid var(--line);
+    background:var(--cream);
+    flex-wrap:wrap;gap:10px;
+  }
+  .topbar .site-name{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;
+  }
+  .topbar .crumbs{
+    font-size:14px;color:var(--ink-soft);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .topbar .crumbs a{color:var(--gold-dark);font-weight:600;}
+  .topbar .crumbs a:hover{text-decoration:underline;}
+
+  .page-hero{
+    max-width:1180px;margin:0 auto;
+    padding:44px 40px 10px;
+  }
+  .page-hero .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card-bg);border:1px solid var(--line);
+    border-radius:999px;padding:6px 16px;font-size:13px;color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .page-hero .tag .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+  .page-hero h1{
+    font-family:'Frank Ruhl Libre',serif;font-weight:900;
+    font-size:clamp(28px,4.4vw,44px);line-height:1.3;margin-bottom:16px;
+  }
+  .page-hero p{
+    max-width:780px;color:var(--ink-soft);font-size:16px;line-height:1.8;
+  }
+
+  .section-wrap{max-width:1180px;margin:0 auto;padding:36px 40px;}
+  .section-wrap h2{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:22px;
+    border-inline-end:4px solid var(--gold);padding-inline-end:14px;
+    margin-bottom:24px;
+  }
+
+  /* Gem cards */
+  .gem-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  }
+  .gem-grid.single{grid-template-columns:minmax(280px,420px);justify-content:center;}
+  .gem-grid.double{grid-template-columns:repeat(2,minmax(280px,1fr));max-width:760px;margin:0 auto;}
+  @media (max-width:860px){ .gem-grid{grid-template-columns:1fr;} }
+
+  .gem-card{
+    background:var(--card-bg);border:1px solid var(--line);border-radius:16px;
+    padding:26px 22px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:14px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .gem-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(30,38,52,.14);}
+  .gem-icon{
+    width:46px;height:46px;border-radius:12px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .gem-icon svg{width:24px;height:24px;}
+  .gem-num{font-size:12px;font-weight:700;color:var(--gold-dark);letter-spacing:.5px;text-transform:uppercase;}
+  .gem-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;}
+  .gem-desc{font-size:13.5px;color:var(--ink-soft);flex:1;}
+  .gem-btn{
+    margin-top:4px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--ink);color:#f7f3e8;font-weight:600;font-size:14px;
+    padding:11px 18px;border-radius:10px;transition:background .15s ease;
+  }
+  .gem-btn:hover{background:var(--gold-dark);}
+  .gem-btn svg{width:16px;height:16px;}
+
+  /* Presentation section */
+  .pdf-wrap{
+    background:var(--card-bg);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .pdf-preview{
+    position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
+  }
+  .pdf-preview img{
+    width:100%;height:100%;object-fit:cover;opacity:.55;
+  }
+  .pdf-preview .overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(15,20,29,.92) 0%, rgba(15,20,29,.5) 55%, rgba(15,20,29,.25) 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:30px 20px;gap:10px;
+  }
+  .pdf-preview .overlay .icon{
+    width:46px;height:46px;color:var(--gold);margin-bottom:4px;
+  }
+  .pdf-preview .overlay h3{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px;color:#f7f3e8;
+  }
+  .pdf-preview .overlay p{
+    font-size:14px;color:#dfe3ea;
+  }
+  .pdf-footer{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    padding:16px 22px;border-top:1px solid var(--line);
+  }
+  .pdf-footer .name{font-size:14px;color:var(--ink-soft);}
+  .dl-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--gold);color:#241d0d;font-weight:700;font-size:13.5px;
+    padding:9px 16px;border-radius:8px;transition:background .15s ease;
+  }
+  .dl-btn:hover{background:var(--gold-dark);color:#fff;}
+  .dl-btn svg{width:15px;height:15px;}
+
+  /* Video link card */
+  .video-link-card{
+    display:flex;align-items:center;gap:18px;
+    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:24px 26px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .video-link-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.2);}
+  .video-link-icon{
+    flex-shrink:0;width:52px;height:52px;border-radius:12px;
+    background:rgba(201,151,31,.18);display:flex;align-items:center;justify-content:center;color:var(--gold);
+  }
+  .video-link-icon svg{width:26px;height:26px;}
+  .video-link-body{flex:1;}
+  .video-link-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;color:#f7f3e8;margin-bottom:4px;}
+  .video-link-desc{font-size:13.5px;color:#c3cad6;}
+  .video-link-arrow{flex-shrink:0;width:24px;height:24px;color:var(--gold);}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 40px;text-align:center;font-size:13px;color:var(--ink-soft);
+  }
+  footer a{color:var(--gold-dark);font-weight:600;}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> ‹
+      <a href="./">תקשוב יישומי</a> ‹ ההבדל בין שרת למחשב לקוח
+    </div>
+    <div class="site-name">תקשוב יישומי · כיתה י׳</div>
+  </div>
+
+  <div class="page-hero">
+    <div class="tag"><span class="dot"></span> נושא 5 · ארכיטקטורת רשת</div>
+    <h1>ההבדל בין שרת למחשב לקוח</h1>
+    <p>איך מחשבים "מדברים" ביניהם ברשת — מי מבקש ומי מספק, מהו מודל שרת-לקוח, ולמה זה הבסיס לכל שירות דיגיטלי שאנחנו משתמשים בו: מדפדפן אינטרנט ועד דואר אלקטרוני. שני Gems ילוו אתכם: הראשון בונה את התמונה הכללית, והשני צולל לפרטים הטכניים של תוכנת השרת עצמה.</p>
+  </div>
+
+  <div class="section-wrap">
+    <h2>מורה אישי מבוסס בינה מלאכותית (Gems)</h2>
+    <div class="gem-grid double">
+
+      <a class="gem-card" href="https://gemini.google.com/gem/153z0qOC-AnwWYY-A4wZ17ep_LhYZ4tOH?usp=sharing" target="_blank" rel="noopener">
+        <div class="gem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="gem-num">Gem 1</div>
+        <div class="gem-title">מדריך ארכיטקטורת שרת-לקוח</div>
+        <div class="gem-desc">ההבדל בין שרת ללקוח, שרת מול מחשב אישי, מודל שרת-לקוח ויתרונותיו, והיישומים המרכזיים שלו באינטרנט — Telnet, SSH, SMTP, DNS ו-HTTP.</div>
+        <div class="gem-btn">כניסה ל-Gem <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      </a>
+
+      <a class="gem-card" href="https://gemini.google.com/gem/1mAsF2fzdFfj6M6rhYGBB_WL6bBT0ppdq?usp=sharing" target="_blank" rel="noopener">
+        <div class="gem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="gem-num">Gem 2</div>
+        <div class="gem-title">מומחה תוכנת ותפעול שרתים</div>
+        <div class="gem-desc">מה זו תוכנת שרת, איך היא פועלת מול לקוחות מרוחקים במנגנון בקשה-תגובה, ניהול משאבים ואבטחה, סוגי שרתים שונים, וחוות שרתים.</div>
+        <div class="gem-btn">כניסה ל-Gem <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="section-wrap">
+    <h2>המצגת המלווה</h2>
+    <div class="pdf-wrap">
+      <div class="pdf-preview">
+        <img src="images/topic-016.jpg" alt="ההבדל בין שרת למחשב לקוח">
+        <div class="overlay">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3>יחידה: ההבדל בין שרת למחשב לקוח</h3>
+          <p>לחצו למטה להורדת המצגת</p>
+        </div>
+      </div>
+      <div class="pdf-footer">
+        <div class="name">ארכיטקטורת שרת-לקוח — מבוא טכני</div>
+        <a class="dl-btn" href="topic-016-presentation.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M6 11l6 6 6-6M5 21h14"/></svg>
+          פתיחה / הורדה
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-wrap">
+    <h2>סרטון ההיכרות</h2>
+    <a class="video-link-card" href="https://notebook.google.com/notebook/56744238-fee5-4c8e-87c0-16d281f0f2e0/artifact/4fed3085-7474-440d-a8bd-8cb52d2a175a?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1" target="_blank" rel="noopener">
+      <div class="video-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z"/></svg></div>
+      <div class="video-link-body">
+        <div class="video-link-title">ההבדל בין שרת למחשב לקוח</div>
+        <div class="video-link-desc">סרטון הסבר ליחידה — נפתח בטאב חדש (NotebookLM)</div>
+      </div>
+      <div class="video-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </a>
+  </div>
+
+  <footer>
+    חלק מפרויקט <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> · מוטי לרנר
+  </footer>
+
+</body>
+</html>

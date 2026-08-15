@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך עיצוב אתר בסיסי בשרת WEB – HTML בתוכנת פאקטריסר — תקשוב יישומי כיתה י׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6f0e3;
+    --cream-2:#efe7d5;
+    --ink:#1e2634;
+    --ink-soft:#4a5468;
+    --gold:#c9971f;
+    --gold-dark:#a97c14;
+    --line:#e2d8c1;
+    --card-bg:#ffffff;
+    --shadow:0 10px 30px rgba(30,38,52,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Heebo',sans-serif;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 40px;
+    border-bottom:1px solid var(--line);
+    background:var(--cream);
+    flex-wrap:wrap;gap:10px;
+  }
+  .topbar .site-name{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;}
+  .topbar .crumbs{font-size:14px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .topbar .crumbs a{color:var(--gold-dark);font-weight:600;}
+  .topbar .crumbs a:hover{text-decoration:underline;}
+
+  .page-wrap{max-width:900px;margin:0 auto;padding:34px 24px 70px;}
+
+  .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card-bg);border:1px solid var(--line);
+    border-radius:999px;padding:6px 16px;font-size:13px;color:var(--ink-soft);
+    margin-bottom:20px;float:left;
+  }
+  .tag .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+
+  h1{
+    clear:both;
+    font-family:'Frank Ruhl Libre',serif;font-weight:900;
+    font-size:clamp(24px,4vw,34px);line-height:1.35;margin-bottom:18px;
+    text-align:center;
+  }
+  .page-desc{
+    max-width:760px;margin:0 auto 8px;color:var(--ink-soft);font-size:15.5px;line-height:1.9;
+    text-align:center;
+  }
+
+  .section-group{margin-top:36px;}
+  .section-label{
+    display:flex;align-items:center;
+    border-inline-start:4px solid var(--gold);
+    padding-inline-start:12px;
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:16px;
+    margin-bottom:14px;
+  }
+
+  .action-card{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    border-radius:14px;padding:20px 24px;color:#fff;
+    box-shadow:var(--shadow);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .action-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(30,38,52,.18);}
+  .action-card.purple{background:linear-gradient(135deg,#3d3268,#251d40);}
+  .action-card.video{background:linear-gradient(135deg,#26334c,#161d2c);}
+  .action-card.quiz{background:linear-gradient(135deg,#1f5049,#123330);}
+
+  .ac-main{display:flex;align-items:center;gap:16px;}
+  .ac-icon{
+    width:44px;height:44px;border-radius:12px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ac-icon svg{width:22px;height:22px;}
+  .action-card.purple .ac-icon{background:#6f57ac;color:#fff;}
+  .action-card.video .ac-icon{background:var(--gold);color:#241a05;}
+  .action-card.quiz .ac-icon{background:#329d8c;color:#fff;}
+
+  .ac-text{display:flex;flex-direction:column;gap:4px;}
+  .ac-title{font-weight:700;font-size:15.5px;}
+  .ac-sub{font-size:12.5px;color:rgba(255,255,255,.65);}
+
+  .ac-chevron{flex-shrink:0;opacity:.55;}
+  .ac-chevron svg{width:20px;height:20px;}
+
+  .worksheet-wrap{display:flex;}
+  .worksheet-card{
+    position:relative;
+    background:var(--card-bg);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:24px;width:100%;max-width:400px;
+  }
+  .wc-icon{
+    position:absolute;top:20px;right:20px;
+    width:38px;height:38px;border-radius:10px;
+    background:var(--gold);color:#241a05;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .wc-icon svg{width:19px;height:19px;}
+  .wc-label{font-size:12.5px;color:var(--ink-soft);margin-bottom:8px;font-weight:600;}
+  .wc-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:17px;margin-bottom:10px;padding-inline-end:50px;}
+  .wc-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.8;margin-bottom:18px;}
+  .wc-btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--ink);color:#fff;font-weight:700;font-size:14px;
+    border-radius:10px;padding:12px;transition:background .15s ease;
+  }
+  .wc-btn:hover{background:#2c374b;}
+  .wc-btn svg{width:16px;height:16px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 40px;text-align:center;font-size:13px;color:var(--ink-soft);
+  }
+  footer a{color:var(--gold-dark);font-weight:600;}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> ‹
+      <a href="./">תקשוב יישומי</a> ‹
+      <a href="04-simulator-packet-tracer.html">יסודות העבודה עם סימולטור Packet Tracer</a> ‹
+      יחידה 10
+    </div>
+    <div class="site-name">תקשוב יישומי · כיתה י׳</div>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="tag"><span class="dot"></span> נושא 4 · יחידת תרגול 10</div>
+
+    <h1>מדריך עיצוב אתר בסיסי בשרת WEB – HTML בתוכנת פאקטריסר</h1>
+    <p class="page-desc">
+      בניית אתר HTML בסיסי ישירות בתוך שרת ה-WEB המובנה בפאקטריסר: הגדרת כיוון כתיבה מימין לשמאל ורקע העמוד, כותרת ראשית ומייל החברה במרכז הדף, החלפת שמות התפריטים לעברית, הוספת תמונה, ובניית שני דפי תוכן פנימיים המקושרים מהדף הראשי. היחידה כוללת מצגת מלווה, סרטון הסבר, שאלון הבנה וחזרה, ודף תרגול מודפס.
+    </p>
+
+    <div class="section-group">
+      <div class="section-label">המצגת המלווה</div>
+      <a class="action-card purple" href="https://notebook.google.com/notebook/245a8308-a767-406b-8d91-84db179621c2/artifact/85d7f71f-4357-4842-9eb5-da181f0bc372" target="_blank" rel="noopener">
+        <div class="ac-main">
+          <div class="ac-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="ac-text">
+            <div class="ac-title">מדריך עיצוב אתר בסיסי בשרת WEB – HTML</div>
+            <div class="ac-sub">מצגת המלווה ליחידה — נפתחת בטאב חדש (NotebookLM)</div>
+          </div>
+        </div>
+        <div class="ac-chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-group">
+      <div class="section-label">סרטון הסבר</div>
+      <a class="action-card video" href="https://notebook.google.com/notebook/245a8308-a767-406b-8d91-84db179621c2/artifact/61ebbe31-57c2-4455-8ed4-c3301eb44d95" target="_blank" rel="noopener">
+        <div class="ac-main">
+          <div class="ac-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z"/></svg>
+          </div>
+          <div class="ac-text">
+            <div class="ac-title">מדריך עיצוב אתר בסיסי בשרת WEB – HTML</div>
+            <div class="ac-sub">סרטון ההסבר ליחידה — נפתח בטאב חדש (NotebookLM)</div>
+          </div>
+        </div>
+        <div class="ac-chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-group">
+      <div class="section-label">שאלון הבנה וחזרה</div>
+      <a class="action-card quiz" href="https://notebook.google.com/notebook/245a8308-a767-406b-8d91-84db179621c2/artifact/92ee5180-df73-4285-bb71-69aed6e5c511" target="_blank" rel="noopener">
+        <div class="ac-main">
+          <div class="ac-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.8.3-1.2.9-1.2 1.6v.3M12 17h.01"/></svg>
+          </div>
+          <div class="ac-text">
+            <div class="ac-title">שאלון הבנה וחזרה — מדריך עיצוב אתר בסיסי בשרת WEB – HTML</div>
+            <div class="ac-sub">שאלון לבדיקה עצמית על תוכן היחידה — נפתח בטאב חדש (NotebookLM)</div>
+          </div>
+        </div>
+        <div class="ac-chevron">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-group">
+      <div class="section-label">דפי תרגול</div>
+      <div class="worksheet-wrap">
+        <div class="worksheet-card">
+          <div class="wc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+          </div>
+          <div class="wc-label">תרגיל 10 · חלק א׳</div>
+          <div class="wc-title">מדריך עיצוב אתר בסיסי בשרת WEB – HTML</div>
+          <div class="wc-desc">
+            מדריך מודפס לעבודה עצמאית בשלבים: הגדרת כיוון כתיבה ורקע, כותרת ראשית ומייל החברה, החלפת שמות התפריטים לעברית, הוספת תמונה, ובניית שני דפי תוכן פנימיים מקושרים בתוך שרת ה-WEB בפאקטריסר.
+          </div>
+          <a class="wc-btn" href="topic-04-10-worksheet-a.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+            פתיחה / הורדה
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    חלק מפרויקט <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> · מוטי לרנר
+  </footer>
+
+</body>
+</html>

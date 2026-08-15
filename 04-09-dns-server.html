@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>יחידת תרגול 9 — הגדרות שרת DNS — תקשוב יישומי כיתה י׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6f0e3;
+    --cream-2:#efe7d5;
+    --ink:#1e2634;
+    --ink-soft:#4a5468;
+    --gold:#c9971f;
+    --gold-dark:#a97c14;
+    --line:#e2d8c1;
+    --card-bg:#ffffff;
+    --shadow:0 10px 30px rgba(30,38,52,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--ink);font-family:'Heebo',sans-serif;line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 40px;border-bottom:1px solid var(--line);background:var(--cream);
+    flex-wrap:wrap;gap:10px;
+  }
+  .topbar .site-name{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;}
+  .topbar .crumbs{font-size:14px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .topbar .crumbs a{color:var(--gold-dark);font-weight:600;}
+  .topbar .crumbs a:hover{text-decoration:underline;}
+
+  .page-hero{max-width:1180px;margin:0 auto;padding:44px 40px 10px;}
+  .page-hero .tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card-bg);border:1px solid var(--line);
+    border-radius:999px;padding:6px 16px;font-size:13px;color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .page-hero .tag .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);}
+  .page-hero h1{
+    font-family:'Frank Ruhl Libre',serif;font-weight:900;
+    font-size:clamp(28px,4.4vw,44px);line-height:1.3;margin-bottom:16px;
+  }
+  .page-hero p{max-width:780px;color:var(--ink-soft);font-size:16px;line-height:1.8;}
+
+  .section-wrap{max-width:1180px;margin:0 auto;padding:30px 40px;}
+  .section-wrap h2{
+    font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:22px;
+    border-inline-end:4px solid var(--gold);padding-inline-end:14px;
+    margin-bottom:24px;
+  }
+
+  /* Presentation section */
+  .pdf-wrap{
+    background:var(--card-bg);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .pdf-preview{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1e2a3d,#2c3d55);}
+  .pdf-preview img{width:100%;height:100%;object-fit:cover;opacity:.55;}
+  .pdf-preview .overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(15,20,29,.92) 0%, rgba(15,20,29,.5) 55%, rgba(15,20,29,.25) 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:30px 20px;gap:10px;
+  }
+  .pdf-preview .overlay .icon{width:46px;height:46px;color:var(--gold);margin-bottom:4px;}
+  .pdf-preview .overlay h3{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:20px;color:#f7f3e8;}
+  .pdf-preview .overlay p{font-size:14px;color:#dfe3ea;}
+  .pdf-footer{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    padding:16px 22px;border-top:1px solid var(--line);
+  }
+  .pdf-footer .name{font-size:14px;color:var(--ink-soft);}
+  .dl-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--gold);color:#241d0d;font-weight:700;font-size:13.5px;
+    padding:9px 16px;border-radius:8px;transition:background .15s ease;
+  }
+  .dl-btn:hover{background:var(--gold-dark);color:#fff;}
+  .dl-btn svg{width:15px;height:15px;}
+
+  /* Video link card */
+  .video-link-card{
+    display:flex;align-items:center;gap:18px;
+    background:linear-gradient(135deg,#1e2a3d,#2c3d55);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:24px 26px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .video-link-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.2);}
+  .video-link-icon{
+    flex-shrink:0;width:52px;height:52px;border-radius:12px;
+    background:rgba(201,151,31,.18);display:flex;align-items:center;justify-content:center;color:var(--gold);
+  }
+  .video-link-icon svg{width:26px;height:26px;}
+  .video-link-body{flex:1;}
+  .video-link-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;color:#f7f3e8;margin-bottom:4px;}
+  .video-link-desc{font-size:13.5px;color:#c3cad6;}
+  .video-link-arrow{flex-shrink:0;width:24px;height:24px;color:var(--gold);}
+
+  /* Quiz link card */
+  .quiz-link-card{
+    display:flex;align-items:center;gap:18px;
+    background:linear-gradient(135deg,#1f3a3d,#2a4d4f);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:24px 26px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .quiz-link-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.2);}
+  .quiz-link-icon{
+    flex-shrink:0;width:52px;height:52px;border-radius:12px;
+    background:rgba(95,208,198,.18);display:flex;align-items:center;justify-content:center;color:#5fd0c6;
+  }
+  .quiz-link-icon svg{width:26px;height:26px;}
+  .quiz-link-body{flex:1;}
+  .quiz-link-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;color:#f7f3e8;margin-bottom:4px;}
+  .quiz-link-desc{font-size:13.5px;color:#c3cad6;}
+  .quiz-link-arrow{flex-shrink:0;width:24px;height:24px;color:#5fd0c6;}
+
+  /* Presentation link card */
+  .pres-link-card{
+    display:flex;align-items:center;gap:18px;
+    background:linear-gradient(135deg,#2e2a4d,#3d3766);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:24px 26px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .pres-link-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.2);}
+  .pres-link-icon{
+    flex-shrink:0;width:52px;height:52px;border-radius:12px;
+    background:rgba(159,140,255,.2);display:flex;align-items:center;justify-content:center;color:#9f8cff;
+  }
+  .pres-link-icon svg{width:26px;height:26px;}
+  .pres-link-body{flex:1;}
+  .pres-link-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;color:#f7f3e8;margin-bottom:4px;}
+  .pres-link-desc{font-size:13.5px;color:#c3cad6;}
+  .pres-link-arrow{flex-shrink:0;width:24px;height:24px;color:#9f8cff;}
+
+  /* Worksheets grid */
+  .sheet-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:860px){ .sheet-grid{grid-template-columns:1fr;} }
+  .sheet-card{
+    background:var(--card-bg);border:1px solid var(--line);border-radius:14px;
+    padding:22px 20px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:12px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .sheet-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(30,38,52,.14);}
+  .sheet-icon{
+    width:44px;height:44px;border-radius:10px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .sheet-icon svg{width:22px;height:22px;}
+  .sheet-part{font-size:12px;font-weight:700;color:var(--gold-dark);text-transform:uppercase;letter-spacing:.5px;}
+  .sheet-title{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:16px;}
+  .sheet-desc{font-size:12.5px;color:var(--ink-soft);flex:1;}
+  .sheet-btn{
+    margin-top:2px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--ink);color:#f7f3e8;font-weight:600;font-size:13.5px;
+    padding:10px 16px;border-radius:9px;transition:background .15s ease;
+  }
+  .sheet-btn:hover{background:var(--gold-dark);}
+  .sheet-btn svg{width:15px;height:15px;}
+
+  footer{border-top:1px solid var(--line);padding:26px 40px;text-align:center;font-size:13px;color:var(--ink-soft);}
+  footer a{color:var(--gold-dark);font-weight:600;}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="crumbs">
+      <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> ‹
+      <a href="./">תקשוב יישומי</a> ‹
+      <a href="04-simulator-packet-tracer.html">יסודות העבודה עם סימולטור Packet Tracer</a> ‹ יחידת תרגול 9
+    </div>
+    <div class="site-name">תקשוב יישומי · כיתה י׳</div>
+  </div>
+
+  <div class="page-hero">
+    <div class="tag"><span class="dot"></span> נושא 4 · יחידת תרגול 9</div>
+    <h1>הגדרות שרת DNS</h1>
+    <p>הבנת תפקידו של שרת ה-DNS כ"ספר הטלפונים" של האינטרנט, המתרגם שמות מתחם לכתובות IP, כולל תרגום, קאשינג, וניתוב וחלוקת עומסים. היחידה סוקרת את התקלות הנפוצות (שרת DNS אינו מגיב, מטמון מיושן, NXDOMAIN, חסימות) ואת תהליך שאילתת ה-DNS המלא (Resolver, Root, TLD, Authoritative). בתרגול מוגדר שרת DNS בסימולטור Packet Tracer על גבי הטופולוגיה הקיימת, כולל רישום שמות מתחם לשרתי ה-Web, ובדיקת תקינות התרגום דרך דפדפן. היחידה כוללת מצגת מלווה, סרטון הסבר, שאלון הבנה וחזרה, ודף תרגול מודרך.</p>
+  </div>
+
+  <div class="section-wrap">
+    <h2>המצגת המלווה</h2>
+    <a class="pres-link-card" href="https://notebook.google.com/notebook/70068e95-7412-448f-834d-d940db8e7e00/artifact/71b67954-47f5-479f-993f-4c8738378751?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener">
+      <div class="pres-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <div class="pres-link-body">
+        <div class="pres-link-title">הגדרות שרת DNS</div>
+        <div class="pres-link-desc">המצגת המלווה ליחידה — נפתחת בטאב חדש (NotebookLM)</div>
+      </div>
+      <div class="pres-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </a>
+  </div>
+
+  <div class="section-wrap">
+    <h2>סרטון הסבר</h2>
+    <a class="video-link-card" href="https://notebook.google.com/notebook/70068e95-7412-448f-834d-d940db8e7e00/artifact/05759d9b-9cca-4ffa-9195-25e61304a019?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener">
+      <div class="video-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3V9z"/></svg></div>
+      <div class="video-link-body">
+        <div class="video-link-title">הגדרות שרת DNS</div>
+        <div class="video-link-desc">סרטון ההסבר ליחידה — נפתח בטאב חדש (NotebookLM)</div>
+      </div>
+      <div class="video-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </a>
+  </div>
+
+  <div class="section-wrap">
+    <h2>שאלון הבנה וחזרה</h2>
+    <a class="quiz-link-card" href="https://notebook.google.com/notebook/70068e95-7412-448f-834d-d940db8e7e00/artifact/73ab7583-4abb-4c06-9e61-6728dae71e9e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener">
+      <div class="quiz-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9.5 9a2.5 2.5 0 115 0c0 1.5-2.5 1.8-2.5 3.5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <div class="quiz-link-body">
+        <div class="quiz-link-title">שאלון הבנה וחזרה — הגדרות שרת DNS</div>
+        <div class="quiz-link-desc">שאלון לבדיקה עצמית על תוכן היחידה — נפתח בטאב חדש (NotebookLM)</div>
+      </div>
+      <div class="quiz-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></div>
+    </a>
+  </div>
+
+  <div class="section-wrap">
+    <h2>דפי תרגול</h2>
+    <div class="sheet-grid">
+
+      <a class="sheet-card" href="topic-04-09-worksheet-a.pdf" target="_blank" rel="noopener">
+        <div class="sheet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg></div>
+        <div class="sheet-part">תרגיל 9 · חלק א׳</div>
+        <div class="sheet-title">הגדרות שרת DNS</div>
+        <div class="sheet-desc">המשך על אותה טופולוגיה: תפקידי שרת ה-DNS, תהליך שאילתת DNS מלא, הגדרת שרת DNS בסימולטור ורישום שמות מתחם לשרתי ה-Web, ובדיקת תקינות התרגום דרך דפדפן.</div>
+        <div class="sheet-btn">פתיחה / הורדה <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M6 11l6 6 6-6M5 21h14"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    חלק מפרויקט <a href="https://moti-lerner-proyektim.github.io/">לומדים בעצמי</a> · מוטי לרנר
+  </footer>
+
+</body>
+</html>

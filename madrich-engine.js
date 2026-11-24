@@ -37,12 +37,67 @@
   function esc(t) { return String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
   function scroll() { requestAnimationFrame(() => { log.scrollTop = log.scrollHeight; }); }
 
+  // ---------- הקראה (Text-to-Speech בדפדפן, בלי שרת) ----------
+  const TTS = (function () {
+    const ok = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+    let on = false, voice = null, rate = 1;
+    try { on = localStorage.getItem('madrich_tts') === '1'; rate = Number(localStorage.getItem('madrich_tts_rate')) || 1; } catch (e) {}
+    function pickVoice() {
+      if (!ok) return;
+      const v = speechSynthesis.getVoices().filter((x) => /^(he|iw)/i.test(x.lang));
+      voice = v.find((x) => /google|natural|online/i.test(x.name)) || v[0] || null;
+    }
+    if (ok) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+    function clean(node) {
+      const c = node.cloneNode(true);
+      c.querySelectorAll('button, .md-actions, .md-copy, .md-tts').forEach((x) => x.remove());
+      c.querySelectorAll('td, th, li, p, b, div').forEach((x) => x.append('. '));
+      return c.textContent
+        .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{2190}-\u{21FF}\u{FE0F}]/gu, ' ')
+        .replace(/—/g, ', ').replace(/([.!?:,])\s*\./g, '$1').replace(/\s*\.\s*(\.\s*)+/g, '. ').replace(/\s+/g, ' ').trim();
+    }
+    function chunks(t) { // Chrome קוטע הקראות ארוכות — מפצלים למשפטים
+      const parts = t.match(/[^.!?:]+[.!?:]*/g) || [t]; const out = []; let cur = '';
+      parts.forEach((p) => { if ((cur + p).length > 180 && cur) { out.push(cur); cur = p; } else cur += p; });
+      if (cur.trim()) out.push(cur); return out;
+    }
+    function speakText(t) {
+      if (!ok || !t) return;
+      chunks(t).forEach((c) => {
+        const u = new SpeechSynthesisUtterance(c.trim()); u.lang = 'he-IL'; u.rate = rate;
+        if (voice) u.voice = voice; speechSynthesis.speak(u);
+      });
+    }
+    return {
+      ok: ok,
+      get on() { return on; },
+      hasHebrew() { pickVoice(); return !!voice; },
+      toggle() { on = !on; try { localStorage.setItem('madrich_tts', on ? '1' : '0'); } catch (e) {} if (!on) this.stop(); return on; },
+      setRate(r) { rate = r; try { localStorage.setItem('madrich_tts_rate', String(r)); } catch (e) {} },
+      get rate() { return rate; },
+      stop() { if (ok) speechSynthesis.cancel(); },
+      read(node) { this.stop(); speakText(clean(node)); },
+      auto(node) { if (on) speakText(clean(node)); }
+    };
+  })();
+  function addSpeaker(bubble) {
+    if (!TTS.ok) return;
+    const b = document.createElement('button'); b.className = 'md-tts'; b.type = 'button';
+    b.title = 'הקראה'; b.setAttribute('aria-label', 'הקראת ההודעה'); b.textContent = '🔊';
+    b.onclick = (e) => { e.stopPropagation(); TTS.read(bubble); };
+    bubble.prepend(b);
+  }
+
   function bot(html, cls) {
     const m = document.createElement('div'); m.className = 'md-msg';
     m.innerHTML = '<div class="ic">' + (D.emoji || '🧭') + '</div><div class="md-b ' + (cls || '') + '">' + html + '</div>';
-    log.appendChild(m); scroll(); return m.querySelector('.md-b');
+    log.appendChild(m); scroll();
+    const bb = m.querySelector('.md-b'); addSpeaker(bb);
+    setTimeout(() => TTS.auto(bb), 0); // אחרי שנוספו כפתורים/אפשרויות
+    return bb;
   }
   function me(text) {
+    TTS.stop();
     const m = document.createElement('div'); m.className = 'md-msg me';
     m.innerHTML = '<div class="ic">אני</div><div class="md-b"></div>';
     m.querySelector('.md-b').textContent = text; log.appendChild(m); scroll();
@@ -279,5 +334,22 @@
   $('#mdText').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onText(); } });
   $('#mdText').addEventListener('input', grow);
   $('#mdRestart').onclick = () => { me('להתחיל מההתחלה'); restart(); };
+  (function ttsControls() {
+    const box = $('#mdTtsBox'); if (!box) return;
+    if (!TTS.ok) { box.innerHTML = '<span class="md-tts-note">הדפדפן הזה לא תומך בהקראה</span>'; return; }
+    const tg = document.createElement('button'); tg.type = 'button'; tg.className = 'md-tts-toggle';
+    const paint = () => { tg.textContent = TTS.on ? '🔊 הקראה פעילה' : '🔈 הקראה'; tg.classList.toggle('on', TTS.on); tg.setAttribute('aria-pressed', TTS.on); };
+    tg.onclick = () => {
+      const now = TTS.toggle(); paint();
+      if (now) {
+        if (!TTS.hasHebrew()) bot('<p>⚠️ לא נמצא במכשיר הזה קול בעברית, אז ההקראה עלולה להישמע לא טוב. ב-Windows אפשר להוסיף קול עברי בהגדרות ← שעה ושפה ← דיבור. בטלפונים בדרך כלל יש קול עברי מובנה.</p>');
+        const last = [...log.querySelectorAll('.md-msg:not(.me) .md-b')].pop(); if (last) TTS.read(last);
+      }
+    };
+    const sp = document.createElement('select'); sp.className = 'md-tts-rate'; sp.setAttribute('aria-label', 'מהירות הקראה');
+    [['0.8', 'איטי'], ['1', 'רגיל'], ['1.25', 'מהיר']].forEach(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; if (Number(v) === TTS.rate) o.selected = true; sp.appendChild(o); });
+    sp.onchange = () => TTS.setRate(Number(sp.value));
+    box.append(tg, sp); paint();
+  })();
   progress(); intro();
 })();

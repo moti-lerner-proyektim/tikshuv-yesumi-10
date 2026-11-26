@@ -130,6 +130,11 @@
   .pdf-preview .overlay p{
     font-size:14px;color:#dfe3ea;
   }
+  .mz-frame{position:relative;width:100%;padding-top:calc(56.25% + 64px);background:var(--cream);}
+  .mz-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .mz-links{display:flex;gap:8px;flex-wrap:wrap;}
+  .dl-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  @media (max-width:700px){.mz-frame{padding-top:0;height:78vh;}}
   .pdf-footer{
     display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
     padding:16px 22px;border-top:1px solid var(--line);
@@ -219,20 +224,21 @@
   <div class="section-wrap">
     <h2>המצגת המלווה</h2>
     <div class="pdf-wrap">
-      <div class="pdf-preview">
-        <img src="images/topic-001.jpg" alt="יחידה מבוא למבנה המחשב">
-        <div class="overlay">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M8 9l3 3 5-5"/></svg>
-          <h3>יחידה: מבוא למבנה המחשב</h3>
-          <p>לחצו למטה להורדת המצגת</p>
-        </div>
+      <div class="mz-frame">
+        <iframe src="01-matzeget.html?embed=1" title="מצגת אינטראקטיבית: המסע אל לב המחשב" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
       </div>
       <div class="pdf-footer">
-        <div class="name">מבוא יחידה — מבנה וחלקי המחשב</div>
-        <a class="dl-btn" href="topic-01-presentation.pdf" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M6 11l6 6 6-6M5 21h14"/></svg>
-          פתיחה / הורדה
-        </a>
+        <div class="name">מצגת אינטראקטיבית — לחצו "הבא" לחשיפת כל נקודה, ונסו את הפעילויות בתוך השקפים</div>
+        <div class="mz-links">
+          <a class="dl-btn" href="01-matzeget.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+            פתיחה במסך מלא
+          </a>
+          <a class="dl-btn ghost" href="topic-01-presentation.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M6 11l6 6 6-6M5 21h14"/></svg>
+            PDF להדפסה
+          </a>
+        </div>
       </div>
     </div>
   </div>
